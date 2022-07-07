@@ -1,3 +1,4 @@
+import os
 import grpc
 import uvicorn
 import requests
@@ -9,6 +10,7 @@ from recommendations_pb2 import RecommendationRequest
 
 
 maxMsgLength = 1024 * 1024 * 1000
+recommendations_host = os.getenv("RECOMMENDATIONS_HOST", "localhost")
 
 
 class RecommendationClient(object):
@@ -20,7 +22,7 @@ class RecommendationClient(object):
         # configure the host and the
         # the port to which the client should connect
         # to.
-        self.host = "localhost"
+        self.host = recommendations_host
         self.server_port = 50051
 
         # instantiate a communication channel
@@ -78,7 +80,7 @@ def grpc_unary(num_of_books: int = 1, name="World"):
 
 @app.get("/rest/{num_of_books}")
 def grpc_rest(num_of_books: int = 1, name="World"):
-    url = f"http://localhost:50052/rest/{num_of_books}"
+    url = f"http://{recommendations_host}:50052/rest/{num_of_books}"
     resp = requests.get(url)
 
     if resp.ok:

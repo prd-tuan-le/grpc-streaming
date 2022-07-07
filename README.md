@@ -1,5 +1,12 @@
 # Solution for streaming HTTP response
 
+TL;DR
+
+```bash
+docker-compose build
+docker-compose up
+```
+
 When 2 services communitate with each other, assumed services named A and B, there will be exist a case of max payload size limit. To bypass this case, [gRPC](https://grpc.io/) seems to be a good choice.
 
 ## What is gRPC?
@@ -122,6 +129,13 @@ Follow these instruction bellow to run this demo
     ```
 
     After that you will see a lot of recommended books in your client's terminal. Also check `recommendations/recommend_books_from_server.txt` file to see what it recevied from the server.
+
+All above steps could be done using docker and docker-compose:
+
+```bash
+docker-compose build
+docker-compose up
+```
 
 With this streaming solution, you can send and receive large amounts of data between 2 services without worrying about the maximum payload limit.
 

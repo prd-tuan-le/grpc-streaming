@@ -1,5 +1,0 @@
-Faker==13.15.0
-fastapi==0.78.0
-grpc==1.0.0
-protobuf==4.21.2
-uvicorn==0.18.2
