@@ -2,13 +2,13 @@ import os
 from locust import HttpUser, task, constant
 
 
-recommendations_host = os.getenv("RECOMMENDATIONS_HOST", "localhost")
+recommendations_client_host = os.getenv("RECOMMENDATIONS_CLIENT_HOST", "localhost")
 
 max_results = 100_000
 
 
 class MarketPlaceTestUser(HttpUser):
-    host = f"http://{recommendations_host}:3333"
+    host = f"http://{recommendations_client_host}:3333"
     wait_time = constant(0)
 
     def on_start(self):

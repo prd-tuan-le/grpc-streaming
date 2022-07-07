@@ -1,11 +1,7 @@
 # Solution for streaming HTTP response
 
-TL;DR
+TL;DR: check [Implementation](#implementation) section for demo.
 
-```bash
-docker-compose build
-docker-compose up
-```
 
 When 2 services communitate with each other, assumed services named A and B, there will be exist a case of max payload size limit. To bypass this case, [gRPC](https://grpc.io/) seems to be a good choice.
 
@@ -88,6 +84,12 @@ for i in range(max_results):
 
 Follow these instruction bellow to run this demo
 
+- *REST*: localhost:3333/rest/<number_of_recommendations>
+- *GRPC unary*: localhost:3333/grpc/<number_of_recommendations>
+- *GRPC stream*: localhost:3333/grpc/stream/<number_of_recommendations>
+- *Locust web UI* localhost:8089
+
+
 1. Create virtual environment and install dependencies
 
     ```bash
@@ -130,12 +132,28 @@ Follow these instruction bellow to run this demo
 
     After that you will see a lot of recommended books in your client's terminal. Also check `recommendations/recommend_books_from_server.txt` file to see what it recevied from the server.
 
-All above steps could be done using docker and docker-compose:
 
-```bash
-docker-compose build
-docker-compose up
-```
+    **All above steps could be done using `docker` and `docker-compose`**:
+
+    ```bash
+    # Modify environment variables for docker-compose in `.env`
+    # cat .env
+    RECOMMENDATIONS_HOST=127.0.0.1
+    RECOMMENDATIONS_CLIENT_HOST=127.0.0.1
+
+    # Start API servers
+    docker-compose -f docker-compose.yml up --build
+
+    # Start API client
+    ## REST: localhost:3333/rest/<number_of_recommendations>
+    ## GRPC unary: localhost:3333/grpc/<number_of_recommendations>
+    ## GRPC stream: localhost:3333/grpc/stream/<number_of_recommendations>
+    docker-compose -f docker-compose.client.yml up --build
+
+    # Locust load test
+    ## Access Locust web UI at `localhost:8089
+    docker-compose -f docker-compose.locust.yml up --build
+    ```
 
 With this streaming solution, you can send and receive large amounts of data between 2 services without worrying about the maximum payload limit.
 

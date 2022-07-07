@@ -1,0 +1,15 @@
+version: "3.3"
+
+services:
+
+  recommendations_client:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: recommendations
+    command: python client.py
+    network_mode: host
+    volumes:
+      - ./recommendations:/service/recommendations
+    environment:
+      - RECOMMENDATIONS_HOST=${RECOMMENDATIONS_HOST}
