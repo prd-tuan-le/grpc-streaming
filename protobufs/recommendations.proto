@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package recommendations;
+
+service Recommendations {
+    rpc get_recommend_books (RecommendationRequest) returns (BookRecommendations);
+    rpc get_recommend_stream (RecommendationRequest) returns (stream BookRecommendation);
+}
+
+message BookRecommendation {
+    int32 id = 1;
+    string title = 2;
+}
+
+message BookRecommendations {
+    repeated BookRecommendation recommendations = 1;
+}
+
+message RecommendationRequest {
+    int32 user_id = 1;
+    int32 max_results = 3;
+}
